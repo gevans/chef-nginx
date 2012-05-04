@@ -6,6 +6,7 @@ version           "0.101.1"
 
 recipe "nginx", "Installs nginx package and sets up configuration with Debian apache style with sites-enabled/sites-available"
 recipe "nginx::source", "Installs nginx from source and sets up configuration with Debian apache style with sites-enabled/sites-available"
+recipe "nginx::ppa", "Installs Nginx from the stable PPA and sets up configuration with Debian apache style with sites-enabled/sites-available"
 
 %w{ ubuntu debian centos redhat fedora }.each do |os|
   supports os

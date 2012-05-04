@@ -10,6 +10,15 @@ directory node[:nginx][:log_dir] do
   action :create
 end
 
+%w(fastcgi_params koi-utf koi-win mime.types proxy_params scgi_params uwsgi_params win-utf).each do |leaf|
+  cookbook_file File.join(node[:nginx][:dir], leaf) do
+    source leaf
+    owner "root"
+    group "root"
+    mode "0644"
+  end
+end
+
 %w(sites-available sites-enabled conf.d).each do |leaf|
   directory File.join(node[:nginx][:dir], leaf) do
     owner "root"
@@ -33,7 +42,7 @@ template "nginx.conf" do
   owner "root"
   group "root"
   mode "0644"
-  notifies :reload, 'service[nginx]', :immediately
+  notifies :reload, "service[nginx]", :immediately
 end
 
 template "#{node[:nginx][:dir]}/sites-available/default" do
@@ -43,4 +52,4 @@ template "#{node[:nginx][:dir]}/sites-available/default" do
   mode 0644
 end
 
-nginx_site 'default'
+nginx_site "default"

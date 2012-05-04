@@ -20,7 +20,7 @@
 # limitations under the License.
 #
 
-default[:nginx][:version] = "1.0.14"
+default[:nginx][:version] = "1.2.0"
 
 case platform
 when "debian","ubuntu"
@@ -38,7 +38,7 @@ else
 end
 
 default[:nginx][:pid] = "/var/run/nginx.pid"
-default[:nginx][:install_method] = 'package'
+default[:nginx][:install_method] = "package"
 
 default[:nginx][:gzip]              = "on"
 default[:nginx][:gzip_http_version] = "1.0"
@@ -46,15 +46,14 @@ default[:nginx][:gzip_comp_level]   = "2"
 default[:nginx][:gzip_proxied]      = "any"
 default[:nginx][:gzip_types]        = [
   "text/plain",
-  "text/html",
   "text/css",
+  "application/json",
   "application/x-javascript",
   "text/xml",
   "application/xml",
   "application/xml+rss",
   "text/javascript",
-  "application/javascript",
-  "application/json"
+  "application/javascript"
 ]
 
 default[:nginx][:keepalive]          = "on"

@@ -18,19 +18,19 @@
 # limitations under the License.
 #
 
-if(node[:nginx][:install_method] == 'source')
-  include_recipe 'nginx::source'
+if node[:nginx][:install_method] == "source"
+  include_recipe "nginx::source"
+elsif node[:nginx][:install_method] == "ppa" && node[:platform] == "ubuntu"
+  include_recipe "nginx::ppa"
 else
   include_recipe "nginx::ohai_plugin"
-  if(%w(redhat centos fedora scientific).include?(node[:platform]))
-    include_recipe 'yum::epel'
-  end
+  include_recipe "yum::epel" if %w(redhat centos fedora scientific).include?(node[:platform])
   package "nginx"
   service "nginx" do
     supports :status => true, :restart => true, :reload => true
     action :enable
   end
-  include_recipe 'nginx::commons'
+  include_recipe "nginx::commons"
 end
 
 service "nginx" do
